@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+    //model
+    let nameOutput;
+    let emailOutput;
+    var isEmailValid = false;
+    show();
+
+    // View
+    function show()
+    {
+        document.getElementById("app").innerHTML = `
+    <div>
+            <div>
+                <h1>WeEkLy ShItPoSt</h1>
+            </div>
+            <div>
+                <div>First Name: <input id="nameInput" placeholder="First Name:" /></div>
+                <div>Email: <input id="emailInput" placeholder="Email:"/></div>
+                <div>Confirm email: <input id="verifyInput" placeholder="Confirm email:" /></div>
+            </div>
+            <button onclick="inputData()">Sign Up</button>
+    </div>`;
+    }
+    //controller
+    function inputData()
+    {
+        nameOutput = nameInput.value;
+        let email = emailInput.value;
+        let email2 = verifyInput.value;
+        verifyEmail(email, email2);
+    }
+    function verifyEmail(x, y) {
+         if (x === y) {
+             emailOutput = y;
+             sendData();
+         };
+    }
+    
+    // backend controller
+    async function getData() {
+        const response = await axios.get('/api/log');
+        console.log(response.data);
+        show();
+    }
+
+    async function sendData() {
+        const response = await axios.post('/api/log', {nameOutput, emailOutput});
+        console.log(response.data);
+    }
+
+</script>
+</body>
+</html>
